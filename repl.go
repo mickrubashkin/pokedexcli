@@ -54,10 +54,6 @@ type cliCommand struct {
 	callback    func(*config) error
 }
 
-func stringPtr(s string) *string {
-	return &s
-}
-
 func getCommands() map[string]cliCommand {
 	return map[string]cliCommand{
 		"exit": {
