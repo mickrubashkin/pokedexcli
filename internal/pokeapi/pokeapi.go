@@ -1,5 +1,5 @@
 package pokeapi
 
 const (
-	baseUrl = "https://pokeapi.co/api/v2"
+	baseURL = "https://pokeapi.co/api/v2"
 )
