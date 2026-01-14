@@ -114,46 +114,28 @@ func commandInspect(cfg *config, args ...string) error {
 
 	name := args[0]
 	pokemon, caught := cfg.pokedex[name]
-	if caught {
-		stats := map[string]int{}
-		for _, stat := range pokemon.Stats {
-			switch stat.Stat.Name {
-			case "hp":
-				stats["hp"] = stat.BaseStat
-			case "attack":
-				stats["attack"] = stat.BaseStat
-			case "defense":
-				stats["defense"] = stat.BaseStat
-			case "special-attack":
-				stats["special-attack"] = stat.BaseStat
-			case "special-defense":
-				stats["special-defense"] = stat.BaseStat
-			case "speed":
-				stats["speed"] = stat.BaseStat
-			}
-		}
-
-		fmt.Println("Name:", pokemon.Name)
-		fmt.Println("Height:", pokemon.Height)
-		fmt.Println("Weight:", pokemon.Weight)
-		fmt.Println("Stats:")
-		for _, stat := range pokemon.Stats {
-			fmt.Printf("  %s: %v\n", stat.Stat.Name, stat.BaseStat)
-		}
-		// fmt.Printf("  -hp: %v\n", stats["hp"])
-		// fmt.Printf("  -attack: %v\n", stats["attack"])
-		// fmt.Printf("  -defense: %v\n", stats["defense"])
-		// fmt.Printf("  -special-attack: %v\n", stats["special-attack"])
-		// fmt.Printf("  -special-defense: %v\n", stats["special-defense"])
-		// fmt.Printf("  -speed: %v\n", stats["speed"])
-		fmt.Println("Types:")
-
-		for _, typeInfo := range pokemon.Types {
-			fmt.Printf("  - %v\n", typeInfo.Type.Name)
-		}
-		return nil
+	if !caught {
+		return errors.New("you have not caught that pokemon")
 	}
 
-	fmt.Println("you have not caught that pokemon")
+	fmt.Println("Name:", pokemon.Name)
+	fmt.Println("Height:", pokemon.Height)
+	fmt.Println("Weight:", pokemon.Weight)
+	fmt.Println("Stats:")
+	for _, stat := range pokemon.Stats {
+		fmt.Printf("  %s: %v\n", stat.Stat.Name, stat.BaseStat)
+	}
+	fmt.Println("Types:")
+	for _, typeInfo := range pokemon.Types {
+		fmt.Printf("  - %v\n", typeInfo.Type.Name)
+	}
+	return nil
+}
+
+func commandPokedex(cfg *config, args ...string) error {
+	fmt.Println("Your Pokedex:")
+	for _, pokemon := range cfg.pokedex {
+		fmt.Printf(" - %v\n", pokemon.Name)
+	}
 	return nil
 }
